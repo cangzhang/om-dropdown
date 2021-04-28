@@ -2,12 +2,14 @@ import './Dropdown.scss';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Menu from './Menu';
-import { IDropdownProps } from './Dropdown.types';
+import { IDropdownProps, IMenuItem } from './Dropdown.types';
 
-export default function OMDropdown({menu}: IDropdownProps) {
+export default function OMDropdown({ menu, checkIcon }: IDropdownProps) {
   const wrapperRef = useRef(null);
   const triggerRef = useRef(null);
+
   const [showMenu, toggleMenu] = useState(false);
+  const [selected, setSelect] = useState<IMenuItem[]>([]);
 
   const handleClickOutside = useCallback((ev) => {
     if (!showMenu) {
@@ -21,6 +23,15 @@ export default function OMDropdown({menu}: IDropdownProps) {
 
   const onClickTrigger = () => {
     toggleMenu(!showMenu);
+  };
+
+  const onToggleSelect = (item) => {
+    const existed = selected.find(i => i.value === item.value);
+    setSelect(
+      existed
+        ? selected.filter(i => i.value !== item.value)
+        : selected.concat(item),
+    );
   };
 
   useEffect(() => {
@@ -40,7 +51,7 @@ export default function OMDropdown({menu}: IDropdownProps) {
       >
         this is om-dropdown
       </div>
-      <Menu show={showMenu} menu={menu} />
+      <Menu show={showMenu} menu={menu} onToggleSelect={onToggleSelect} selectedItems={selected} checkIcon={checkIcon}/>
     </div>
   );
 }

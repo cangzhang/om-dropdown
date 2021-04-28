@@ -146,7 +146,6 @@
         color: rgb(133, 146, 166);
         font-size: 12px;
         line-height: 16px;
-        position: relative;
       }
 
       &_clear-filter {
@@ -161,6 +160,7 @@
           background-color: rgb(218, 223, 230);
         }
 
+        position: relative;
         height: 16px;
         color: rgb(0, 102, 255);
         font-size: 12px;
@@ -200,6 +200,7 @@
         &_check-icon {
           height: 24px;
           width: 24px;
+          margin-left: auto;
         }
 
         &:last-of-type {

@@ -16,20 +16,23 @@ export interface IEntryItem extends IMenuItem {
 
 export interface IDropdownProps {
   menu: IEntryItem[];
+  checkIcon?: ReactElement | string;
 }
 
-export interface IMenuProps {
+export interface IMenuProps extends Pick<IDropdownProps, 'checkIcon'>{
   show: boolean;
   menu: IEntryItem[];
   expandIcon?: ReactElement | string;
   prefixIcon?: ReactElement | string;
   backIcon?: ReactElement | string;
   searchIcon?: ReactElement | string;
-  checkIcon?: ReactElement | string;
+  onToggleSelect: (i: IMenuItem) => any;
+  selectedItems: IMenuItem[];
 }
 
 export interface ISecondaryMenuProps extends Pick<IEntryItem, 'children' | 'menuTitle' | 'filterKey' | 'placeholder' | 'getItemIcon'>,
-  Pick<IMenuProps, 'backIcon' | 'checkIcon' | 'searchIcon'> {
+  Pick<IMenuProps, 'backIcon' | 'searchIcon' | 'onToggleSelect' | 'selectedItems'>,
+  Pick<IDropdownProps, 'checkIcon'>{
   backToTopLevel: () => any;
 }
 

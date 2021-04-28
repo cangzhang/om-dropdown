@@ -48,4 +48,4 @@ const menu = [
   },
 ];
 
-export const Primary = () => <OMDropdown menu={menu}/>;
+export const Primary = () => <OMDropdown menu={menu} checkIcon={'√'}/>;

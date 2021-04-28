@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IEntryItem, IMenuProps, ISecondaryMenuProps } from './Dropdown.types';
+import { IEntryItem, IMenuItem, IMenuProps, ISecondaryMenuProps } from './Dropdown.types';
 
 function Secondary({
                      menuTitle = ``,
@@ -11,15 +11,16 @@ function Secondary({
                      backToTopLevel,
                      checkIcon,
                      placeholder = ``,
+                     selectedItems,
+                     onToggleSelect,
                    }: ISecondaryMenuProps) {
   const [filter, setFilter] = useState(``);
-  const [selected, setSelected] = useState<string[]>([]);
 
   const onFilterChange = (ev) => {
     setFilter(ev.target.value);
   };
 
-  const hasSelected = selected.length > 0;
+  const hasSelected = selectedItems.length > 0;
   const shouldShowIcon = !!getItemIcon;
 
   const f = filter.trim().toLowerCase();
@@ -51,7 +52,7 @@ function Secondary({
 
     <div className={'om-dropdown_secondary_status'}>
       <div className={'om-dropdown_secondary_status_picked'}>
-        已选 {selected.length ?? 0} 项
+        已选 {selectedItems.length ?? 0} 项
       </div>
       {
         hasSelected &&
@@ -63,18 +64,21 @@ function Secondary({
 
     <div className={'om-dropdown_secondary_list'}>
       {
-        filterResult.map(i =>
-          <div className={'om-dropdown_secondary_list_item'} key={i.key}>
-            {shouldShowIcon && <div className={'dropdown_secondary_list_item_icon'}>
-              {getItemIcon(i)}
-            </div>}
-            <div className={'om-dropdown_secondary_list_item_label'}>
-              {i.label}
-            </div>
-            {checkIcon && <div className={'om-dropdown_secondary_list_item_check-icon'}>
-              {checkIcon}
-            </div>}
-          </div>,
+        filterResult.map(i => {
+            const checked = selectedItems.find(s => s.value === i.value);
+
+            return <div className={'om-dropdown_secondary_list_item'} key={i.key} onClick={() => onToggleSelect(i)}>
+              {shouldShowIcon && <div className={'dropdown_secondary_list_item_icon'}>
+                {getItemIcon(i)}
+              </div>}
+              <div className={'om-dropdown_secondary_list_item_label'}>
+                {i.label}
+              </div>
+              {checked && checkIcon && <div className={'om-dropdown_secondary_list_item_check-icon'}>
+                {checkIcon}
+              </div>}
+            </div>;
+          },
         )
       }
     </div>
@@ -89,6 +93,8 @@ export default function Menu({
                                backIcon,
                                searchIcon,
                                checkIcon,
+                               onToggleSelect,
+                               selectedItems,
                              }: IMenuProps) {
   const [curEntry, setEntry] = useState<string | number | undefined>();
 
@@ -140,6 +146,8 @@ export default function Menu({
       checkIcon={checkIcon}
       backToTopLevel={() => setEntry(undefined)}
       placeholder={entryItem.placeholder}
+      onToggleSelect={onToggleSelect}
+      selectedItems={selectedItems}
     />
     : <div className={'om-dropdown_menu'}>{renderEntryList()}</div>;
 }
