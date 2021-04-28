@@ -1,0 +1,14 @@
+.om-dropdown {
+  display: flex;
+
+  &-container {
+    position: relative;
+  }
+
+  &-menu {
+    position: absolute;
+    top: 100%;
+
+    cursor: pointer;
+  }
+}
