@@ -32,15 +32,15 @@ export default function OMDropdown({menu}: IDropdownProps) {
   }, [handleClickOutside]);
 
   return (
-    <div className={'om-dropdown om-dropdown-container'} ref={wrapperRef}>
+    <div className={'om-dropdown om-dropdown_container'} ref={wrapperRef}>
       <div
-        className={'om-dropdown-trigger'}
+        className={'om-dropdown_trigger'}
         ref={triggerRef}
         onClick={onClickTrigger}
       >
         this is om-dropdown
       </div>
-      <Menu show={showMenu} menu={menu}/>
+      <Menu show={showMenu} menu={menu} />
     </div>
   );
 }

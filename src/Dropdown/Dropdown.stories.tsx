@@ -10,6 +10,9 @@ const menu = [
     label: 'aaa',
     value: 'aaa',
     key: 'aaa',
+    menuTitle: '新增成员',
+    filterKey: 'value',
+    placeholder: '搜索成员…',
     children: [
       {
         label: 'aaa-1',
@@ -27,6 +30,9 @@ const menu = [
     label: 'bbb',
     value: 'bbb',
     key: 'bbb',
+    menuTitle: '新增组',
+    filterKey: 'value',
+    placeholder: '搜索组…',
     children: [
       {
         label: 'aaa-2',
