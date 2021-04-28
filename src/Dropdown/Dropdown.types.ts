@@ -1,6 +1,9 @@
+import { ReactElement } from 'react';
+
 export interface IMenuItem {
   label: string;
   value: string;
+  key: string | number;
 }
 
 export interface IEntryItem extends IMenuItem {
@@ -14,4 +17,7 @@ export interface IDropdownProps {
 export interface IMenuProps {
   show: boolean;
   menu: IEntryItem[];
+  expandIcon?: ReactElement;
+  prefixIcon?: ReactElement;
 }
+
