@@ -4,12 +4,14 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Menu from './Menu';
 import { IDropdownProps, IMenuItem } from './Dropdown.types';
 
-export default function OMDropdown({ menu, checkIcon }: IDropdownProps) {
+export default function OMDropdown({ menu, checkIcon, onValueChange = () => null, ...rest }: IDropdownProps) {
+  const { value } = rest;
+
   const wrapperRef = useRef(null);
   const triggerRef = useRef(null);
 
   const [showMenu, toggleMenu] = useState(false);
-  const [selected, setSelect] = useState<IMenuItem[]>([]);
+  const [selected, setSelected] = useState<IMenuItem[]>(value ?? []);
 
   const handleClickOutside = useCallback((ev) => {
     if (!showMenu) {
@@ -27,12 +29,25 @@ export default function OMDropdown({ menu, checkIcon }: IDropdownProps) {
 
   const onToggleSelect = (item) => {
     const existed = selected.find(i => i.value === item.value);
-    setSelect(
-      existed
-        ? selected.filter(i => i.value !== item.value)
-        : selected.concat(item),
-    );
+    const next = existed
+      ? selected.filter(i => i.value !== item.value)
+      : selected.concat(item);
+    if ('value' in rest) {
+      onValueChange(next);
+    } else {
+      setSelected(next);
+    }
   };
+
+  useEffect(() => {
+    onValueChange(selected);
+  }, [selected]);
+
+  useEffect(() => {
+    if ('value' in rest) {
+      setSelected(value ?? []);
+    }
+  }, [value]);
 
   useEffect(() => {
     document.addEventListener(`mousedown`, handleClickOutside);

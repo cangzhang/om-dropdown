@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OMDropdown from './Dropdown';
+import { IMenuItem } from './Dropdown.types';
 
 export default {
   title: 'OMDropdown',
@@ -24,7 +25,7 @@ const menu = [
         value: 'bbb-1',
         key: 'bbb-1',
       },
-    ]
+    ],
   },
   {
     label: 'bbb',
@@ -44,8 +45,28 @@ const menu = [
         value: 'bbb-2',
         key: 'bbb-2',
       },
-    ]
+    ],
   },
 ];
 
-export const Primary = () => <OMDropdown menu={menu} checkIcon={'√'}/>;
+const initValue: IMenuItem[] = [
+  {
+    label: 'aaa-1',
+    value: 'aaa-1',
+    key: 'aaa-1',
+  },
+];
+
+export const Controlled = () => {
+  const [value, setValue] = useState<IMenuItem[]>(initValue);
+
+  const onValueChange = items => {
+    setValue(items);
+  }
+
+  return <OMDropdown menu={menu} checkIcon={'√'} value={value} onValueChange={onValueChange}/>;
+};
+
+export const Uncontrolled = () => {
+  return <OMDropdown menu={menu} checkIcon={'√'} />;
+};

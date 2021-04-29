@@ -16,6 +16,8 @@ export interface IEntryItem extends IMenuItem {
 
 export interface IDropdownProps {
   menu: IEntryItem[];
+  onValueChange?: (selected: IMenuItem[]) => any;
+  value?: IMenuItem[];
   checkIcon?: ReactElement | string;
 }
 

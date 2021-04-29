@@ -160,6 +160,10 @@
           background-color: rgb(218, 223, 230);
         }
 
+        &:hover {
+          cursor: pointer;
+        }
+
         position: relative;
         height: 16px;
         color: rgb(0, 102, 255);
