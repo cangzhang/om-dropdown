@@ -38,12 +38,12 @@ export default function OMDropdown({
     toggleMenu(!showMenu);
   };
 
-  const updateSelect = (next) => {
+  const updateSelect = (next, changed, nextStatus) => {
     if (!('value' in rest)) {
       setSelected(next);
     }
 
-    onValueChange(next);
+    onValueChange(next, changed, nextStatus);
   };
 
   const onToggleSelect = (item) => {
@@ -52,7 +52,7 @@ export default function OMDropdown({
       ? selected.filter(i => i.value !== item.value)
       : selected.concat(item);
 
-    updateSelect(next);
+    updateSelect(next, [item], !existed);
   };
 
   const onClear = (items) => {
@@ -61,12 +61,8 @@ export default function OMDropdown({
       return !shouldRemove;
     });
 
-    updateSelect(next);
+    updateSelect(next, items, false);
   };
-
-  useEffect(() => {
-    onValueChange(selected);
-  }, [selected]);
 
   useEffect(() => {
     if ('value' in rest) {

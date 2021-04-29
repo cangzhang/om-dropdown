@@ -338,8 +338,10 @@ const getItemIcon = () => {
 export const Controlled = () => {
   const [value, setValue] = useState<IMenuItem[]>(initValue);
 
-  const onValueChange = items => {
+  const onValueChange = (items, changed, nextStatus) => {
     setValue(items);
+    console.log(`changed: `, changed);
+    console.log(`next status: `, nextStatus);
   };
 
   return <>
