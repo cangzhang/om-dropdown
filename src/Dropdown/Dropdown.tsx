@@ -4,7 +4,17 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Menu from './Menu';
 import { IDropdownProps, IMenuItem } from './Dropdown.types';
 
-export default function OMDropdown({ menu, checkIcon, onValueChange = () => null, ...rest }: IDropdownProps) {
+export default function OMDropdown({
+                                     menu,
+                                     checkIcon,
+                                     onValueChange = () => null,
+                                     getItemIcon,
+                                     children,
+                                     expandIcon,
+                                     backIcon,
+                                     searchIcon,
+                                     ...rest
+                                   }: IDropdownProps) {
   const { value } = rest;
 
   const wrapperRef = useRef(null);
@@ -27,16 +37,30 @@ export default function OMDropdown({ menu, checkIcon, onValueChange = () => null
     toggleMenu(!showMenu);
   };
 
+  const updateSelect = (next) => {
+    if (!('value' in rest)) {
+      setSelected(next);
+    }
+
+    onValueChange(next);
+  };
+
   const onToggleSelect = (item) => {
     const existed = selected.find(i => i.value === item.value);
     const next = existed
       ? selected.filter(i => i.value !== item.value)
       : selected.concat(item);
-    if ('value' in rest) {
-      onValueChange(next);
-    } else {
-      setSelected(next);
-    }
+
+    updateSelect(next);
+  };
+
+  const onClear = (items) => {
+    const next = selected.filter(i => {
+      const shouldRemove = items.find(j => j.value === i.value);
+      return !shouldRemove;
+    });
+
+    updateSelect(next);
   };
 
   useEffect(() => {
@@ -64,9 +88,20 @@ export default function OMDropdown({ menu, checkIcon, onValueChange = () => null
         ref={triggerRef}
         onClick={onClickTrigger}
       >
-        this is om-dropdown
+        {children}
       </div>
-      <Menu show={showMenu} menu={menu} onToggleSelect={onToggleSelect} selectedItems={selected} checkIcon={checkIcon}/>
+      <Menu
+        show={showMenu}
+        menu={menu}
+        onToggleSelect={onToggleSelect}
+        selectedItems={selected}
+        checkIcon={checkIcon}
+        getItemIcon={getItemIcon}
+        onClear={onClear}
+        expandIcon={expandIcon}
+        backIcon={backIcon}
+        searchIcon={searchIcon}
+      />
     </div>
   );
 }

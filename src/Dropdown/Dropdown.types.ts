@@ -1,4 +1,6 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
+
+type IIcon = ReactElement | string | number;
 
 export interface IMenuItem {
   label: string;
@@ -11,30 +13,32 @@ export interface IEntryItem extends IMenuItem {
   menuTitle?: string;
   filterKey?: string,
   placeholder?: string;
-  getItemIcon?: (i: IMenuItem) => ReactElement;
+  prefixIcon?: IIcon;
 }
 
 export interface IDropdownProps {
   menu: IEntryItem[];
+  children: ReactNode;
   onValueChange?: (selected: IMenuItem[]) => any;
   value?: IMenuItem[];
-  checkIcon?: ReactElement | string;
+  checkIcon?: IIcon;
+  getItemIcon?: (i: IMenuItem) => IIcon;
+  expandIcon?: IIcon;
+  backIcon?: IIcon;
+  searchIcon?: IIcon;
 }
 
-export interface IMenuProps extends Pick<IDropdownProps, 'checkIcon'>{
+export interface IMenuProps extends Pick<IDropdownProps, 'checkIcon' | 'getItemIcon' | 'expandIcon' | 'backIcon' | 'searchIcon'> {
   show: boolean;
   menu: IEntryItem[];
-  expandIcon?: ReactElement | string;
-  prefixIcon?: ReactElement | string;
-  backIcon?: ReactElement | string;
-  searchIcon?: ReactElement | string;
   onToggleSelect: (i: IMenuItem) => any;
   selectedItems: IMenuItem[];
+  onClear: (s: IMenuItem[]) => any;
 }
 
-export interface ISecondaryMenuProps extends Pick<IEntryItem, 'children' | 'menuTitle' | 'filterKey' | 'placeholder' | 'getItemIcon'>,
-  Pick<IMenuProps, 'backIcon' | 'searchIcon' | 'onToggleSelect' | 'selectedItems'>,
-  Pick<IDropdownProps, 'checkIcon'>{
+export interface ISecondaryMenuProps extends Pick<IEntryItem, 'children' | 'menuTitle' | 'filterKey' | 'placeholder' | 'prefixIcon'>,
+  Pick<IMenuProps, 'backIcon' | 'searchIcon' | 'onToggleSelect' | 'selectedItems' | 'onClear'>,
+  Pick<IDropdownProps, 'checkIcon' | 'getItemIcon'> {
   backToTopLevel: () => any;
 }
 

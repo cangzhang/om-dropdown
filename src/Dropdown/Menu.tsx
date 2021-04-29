@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { IEntryItem, IMenuItem, IMenuProps, ISecondaryMenuProps } from './Dropdown.types';
 
-function Secondary({
-                     menuTitle = ``,
-                     children = [],
-                     filterKey = `value`,
-                     backIcon = `<`,
-                     searchIcon,
-                     getItemIcon,
-                     backToTopLevel,
-                     checkIcon,
-                     placeholder = ``,
-                     selectedItems,
-                     onToggleSelect,
-                   }: ISecondaryMenuProps) {
+export function Secondary({
+                            menuTitle = ``,
+                            children = [],
+                            filterKey = `value`,
+                            backIcon,
+                            searchIcon,
+                            getItemIcon,
+                            backToTopLevel,
+                            checkIcon,
+                            placeholder = ``,
+                            selectedItems,
+                            onToggleSelect,
+                            onClear,
+                          }: ISecondaryMenuProps) {
   const [filter, setFilter] = useState(``);
 
   const onFilterChange = (ev) => {
@@ -56,7 +57,7 @@ function Secondary({
       </div>
       {
         hasSelected &&
-        <div className={'om-dropdown_secondary_status_clear-filter'}>
+        <div className={'om-dropdown_secondary_status_clear-filter'} onClick={() => onClear(selectedItems)}>
           清除已选
         </div>
       }
@@ -68,7 +69,7 @@ function Secondary({
             const checked = selectedItems.find(s => s.value === i.value);
 
             return <div className={'om-dropdown_secondary_list_item'} key={i.key} onClick={() => onToggleSelect(i)}>
-              {shouldShowIcon && <div className={'dropdown_secondary_list_item_icon'}>
+              {shouldShowIcon && <div className={'om-dropdown_secondary_list_item_icon'}>
                 {getItemIcon(i)}
               </div>}
               <div className={'om-dropdown_secondary_list_item_label'}>
@@ -85,16 +86,23 @@ function Secondary({
   </div>;
 }
 
+const filterItems = (arr: IMenuItem[] = [], selected: IMenuItem[] = []) => {
+  return selected.filter(s => {
+    return arr.find(i => i.value === s.value);
+  });
+};
+
 export default function Menu({
                                show,
                                menu,
                                expandIcon,
-                               prefixIcon,
                                backIcon,
                                searchIcon,
                                checkIcon,
                                onToggleSelect,
                                selectedItems,
+                               getItemIcon,
+                               onClear,
                              }: IMenuProps) {
   const [curEntry, setEntry] = useState<string | number | undefined>();
 
@@ -105,19 +113,18 @@ export default function Menu({
   const renderEntryList = () => {
     return menu.map(i => {
       const hasChildren = i.children?.length > 0;
+
       return (
         <div key={i.key} className={'om-dropdown_entry'} onClick={onClickEntry(i)}>
           <div className={'om-dropdown_entry_label'}>
-            {prefixIcon ?? <div className={'om-dropdown_entry_label_prefix-icon'}>
-              {prefixIcon}
+            {i.prefixIcon && <div className={'om-dropdown_entry_label_prefix-icon'}>
+              {i.prefixIcon}
             </div>}
             <div className={'om-dropdown_entry_label_text'}>
               {i.label}
             </div>
           </div>
-          <div className={'om-dropdown_entry_expand-icon'}>
-            {hasChildren && (expandIcon ?? `>`)}
-          </div>
+          {hasChildren && (expandIcon && <div className={'om-dropdown_entry_expand-icon'}>{expandIcon}</div>)}
         </div>
       );
     });
@@ -135,6 +142,7 @@ export default function Menu({
 
   const showSecondaryMenu = curEntry !== undefined;
   const entryItem = curEntry && menu.find(i => i.key === curEntry);
+  const itemsOfEntry = filterItems(entryItem?.children, selectedItems) ?? [];
 
   return showSecondaryMenu
     ? <Secondary
@@ -147,7 +155,9 @@ export default function Menu({
       backToTopLevel={() => setEntry(undefined)}
       placeholder={entryItem.placeholder}
       onToggleSelect={onToggleSelect}
-      selectedItems={selectedItems}
+      selectedItems={itemsOfEntry}
+      getItemIcon={getItemIcon}
+      onClear={onClear}
     />
     : <div className={'om-dropdown_menu'}>{renderEntryList()}</div>;
 }
