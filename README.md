@@ -1,3 +1,4 @@
 # om-dropdown
 
-[Check types here.](./src/Dropdown/Dropdown.types.ts)
+- [Demo](https://cangzhang.github.io/om-dropdown/index.html)
+- [Check types](./src/Dropdown/Dropdown.types.ts)

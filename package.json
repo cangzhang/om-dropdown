@@ -7,7 +7,7 @@
     "build"
   ],
   "types": "build/index.d.ts",
-  "description": "A skeleton to create your own React component library using Rollup, TypeScript, Sass and Storybook",
+  "description": "oh my dropdown, a simple dropdown",
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
