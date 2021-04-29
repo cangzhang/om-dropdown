@@ -1,6 +1,6 @@
 {
-  "name": "react-component-library",
-  "version": "1.0.0",
+  "name": "om-dropdown",
+  "version": "0.1.0",
   "main": "build/index.js",
   "module": "build/index.esm.js",
   "files": [
@@ -19,23 +19,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HarveyD/react-component-library.git"
+    "url": "git+https://github.com/cangzhang/om-dropdown.git"
   },
   "keywords": [
     "React",
-    "Component",
-    "Library",
+    "Hooks",
     "Rollup",
     "Typescript",
-    "Sass",
     "Storybook"
   ],
-  "author": "Harvey Delaney",
+  "author": "Al Cheung",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HarveyD/react-component-library/issues"
+    "url": "https://github.com/cangzhang/om-dropdown/issues"
   },
-  "homepage": "https://github.com/HarveyD/react-component-library#readme",
+  "homepage": "https://github.com/cangzhang/om-dropdown#readme",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
