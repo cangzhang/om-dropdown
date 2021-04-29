@@ -1,7 +1,7 @@
 import './Dropdown.scss';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import Menu from './Menu';
+import { Menu } from './Menu';
 import { IDropdownProps, IMenuItem } from './Dropdown.types';
 
 export default function OMDropdown({
@@ -13,6 +13,7 @@ export default function OMDropdown({
                                      expandIcon,
                                      backIcon,
                                      searchIcon,
+                                     hideStatusRow,
                                      ...rest
                                    }: IDropdownProps) {
   const { value } = rest;
@@ -101,6 +102,7 @@ export default function OMDropdown({
         expandIcon={expandIcon}
         backIcon={backIcon}
         searchIcon={searchIcon}
+        hideStatusRow={hideStatusRow}
       />
     </div>
   );

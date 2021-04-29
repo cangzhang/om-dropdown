@@ -26,9 +26,10 @@ export interface IDropdownProps {
   expandIcon?: IIcon;
   backIcon?: IIcon;
   searchIcon?: IIcon;
+  hideStatusRow?: boolean;
 }
 
-export interface IMenuProps extends Pick<IDropdownProps, 'checkIcon' | 'getItemIcon' | 'expandIcon' | 'backIcon' | 'searchIcon'> {
+export interface IMenuProps extends Pick<IDropdownProps, 'checkIcon' | 'getItemIcon' | 'expandIcon' | 'backIcon' | 'searchIcon' | 'hideStatusRow'> {
   show: boolean;
   menu: IEntryItem[];
   onToggleSelect: (i: IMenuItem) => any;
@@ -38,7 +39,7 @@ export interface IMenuProps extends Pick<IDropdownProps, 'checkIcon' | 'getItemI
 
 export interface ISecondaryMenuProps extends Pick<IEntryItem, 'children' | 'menuTitle' | 'filterKey' | 'placeholder' | 'prefixIcon'>,
   Pick<IMenuProps, 'backIcon' | 'searchIcon' | 'onToggleSelect' | 'selectedItems' | 'onClear'>,
-  Pick<IDropdownProps, 'checkIcon' | 'getItemIcon'> {
+  Pick<IDropdownProps, 'checkIcon' | 'getItemIcon' | 'hideStatusRow'> {
   backToTopLevel: () => any;
 }
 

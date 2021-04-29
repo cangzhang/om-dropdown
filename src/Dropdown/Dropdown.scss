@@ -1,6 +1,18 @@
 .om-dropdown {
   $hoverBg: rgb(245, 247, 250);
 
+  @mixin ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @mixin icon-style {
+    height: 24px;
+    width: 24px;
+    text-align: center;
+  }
+
   display: flex;
   color: rgb(32, 45, 64);
 
@@ -45,20 +57,18 @@
       display: flex;
 
       &_prefix-icon {
-        height: 24px;
-        width: 24px;
         margin-right: 8px;
-        text-align: center;
+
+        @include icon-style;
       }
 
       &_text {
+        @include ellipsis;
       }
     }
 
     &_expand-icon {
-      height: 24px;
-      width: 24px;
-      text-align: center;
+      @include icon-style;
       margin-left: auto;
     }
   }
@@ -94,13 +104,11 @@
       cursor: pointer;
 
       &_back-icon {
+        @include icon-style;
+
         position: absolute;
-        height: 24px;
-        width: 24px;
         top: 8px;
         left: 7px;
-
-        text-align: center;
 
         &:hover {
           background-color: rgb(214, 231, 255);
@@ -193,6 +201,7 @@
       margin-top: 4px;
       user-select: none;
       cursor: pointer;
+      overflow-y: auto;
 
       &_item {
         display: flex;
@@ -204,18 +213,20 @@
         }
 
         &_icon {
-          height: 24px;
-          width: 24px;
           margin-right: 8px;
+
+          @include icon-style;
         }
 
         &_label {
           height: 24px;
+          width: calc(100% - 50px);
+          @include ellipsis;
         }
 
         &_check-icon {
-          height: 24px;
-          width: 24px;
+          @include icon-style;
+
           margin-left: auto;
         }
 
